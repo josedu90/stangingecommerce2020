@@ -1,0 +1,26 @@
+# Documentation: https://roots.io/trellis/docs/remote-server-setup/
+# `wordpress_sites` options: https://roots.io/trellis/docs/wordpress-sites
+# Define accompanying passwords/secrets in group_vars/production/vault.yml
+
+wordpress_sites:
+  bellavistamarket.digital:
+    site_hosts:
+      - canonical: www.josedu.digital
+        redirects:
+          - josedu.digital
+    local_path: ../bellavistamarket.digital # path targeting local Bedrock site directory (relative to Ansible root)
+    repo: git@github.com:josedu90/produccionecommerce2020.com.git # replace with your Git repo URL
+    repo_subtree_path: bellavistamarket.digital # relative path to your Bedrock/WP directory in your repo
+    branch: master
+    multisite:
+      enabled: false
+    ssl:
+      # SSL must be enabled
+      enabled: true
+      # OCSP stapling must be disabled
+      stapling_enabled: false
+      # Use this role to generate Cloudflare Origin CA certificate
+      provider: cloudflare-origin-ca
+
+    cache:
+      enabled: true
